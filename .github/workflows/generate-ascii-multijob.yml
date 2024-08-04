@@ -1,0 +1,37 @@
+name: Generate-ASCII Artwork Multijob
+
+on: push
+
+jobs:
+    build_job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v4
+        
+        - name: Install Cowsay Program
+          run: sudo apt-get install cowsay -y
+
+        - name: Execute artwork
+          run: cowsay -f dragon "Run for cover, Iam a dragon.... RAWR" >> dragon.txt 
+        
+        - name: Sleep for 30 seconds
+          run: sleep 30
+    
+    test_job:
+        needs: build_job
+        runs-on: ubuntu-latest
+        steps:    
+        - name: Sleep for 30 seconds
+          run: sleep 10
+        
+        - name: Tests whether image exisits
+          run: grep -i "dragon" dragon.txt 
+
+    deploy_job:
+        needs: [build_job, test_job]
+        runs-on: ubuntu-latest
+        steps:    
+        - name: Read File
+          run: cat dragon.txt
+
