@@ -11,4 +11,4 @@ echo Display the file
 cat dragon.txt
 
 echo Display checked out file
-run: ls -ltra
+ls -ltra
