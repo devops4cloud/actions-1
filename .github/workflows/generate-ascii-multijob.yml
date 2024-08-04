@@ -15,13 +15,22 @@ jobs:
         - name: Execute artwork
           run: cowsay -f dragon "Run for cover, Iam a dragon.... RAWR" >> dragon.txt 
         
-        - name: Sleep for 30 seconds
-          run: sleep 30
+        - name: Upload a Build Artifact
+          uses: actions/upload-artifact@v4.3.5
+          with:
+            name: dragon.txt
+            path: dragon.txt
+
     
     test_job:
         needs: build_job
         runs-on: ubuntu-latest
-        steps:    
+        steps:   
+        - name: Download a Build Artifact
+          uses: actions/download-artifact@v4.1.8
+          with:
+             name: dragon.txt
+
         - name: Sleep for 30 seconds
           run: sleep 10
         
@@ -31,7 +40,11 @@ jobs:
     deploy_job:
         needs: [build_job, test_job]
         runs-on: ubuntu-latest
-        steps:    
+        steps:
+        - name: Download a Build Artifact
+          uses: actions/download-artifact@v4.1.8
+          with:
+               name: dragon.txt
         - name: Read File
           run: cat dragon.txt
 
