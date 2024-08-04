@@ -13,4 +13,4 @@ jobs:
           run: ls -ltra
 
         - name: Executing shell script
-          run: ascii-scrupt.sh
+          run: ./ascii-script.sh
